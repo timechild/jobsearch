@@ -1,5 +1,6 @@
 import scrapy
 import urllib2
+from difflib import SequenceMatcher
 from jobspider.items import IndeedItem
 
 
@@ -12,14 +13,19 @@ class IndeedSpider(scrapy.Spider):
     def parse(self, response):
 
         data = urllib2.urlopen("https://raw.githubusercontent.com/adamalton/recruiterdomains/master/domains.txt").read()
+        data2 = urllib2.urlopen('https://raw.githubusercontent.com/timechild/jobsearch/master/jobspider/domains2.txt').read()
+        data = data + data2
+   
         recruiter_list = data.split("\n")
         recruiter_list = map(lambda x: x.split('.')[0], recruiter_list)
 
         for res in response.css('.row.result'):
             try:
                 company = res.css('.company::text').extract_first().lstrip()
+                company_cln = company.lower().replace(' ', '')
+                max_rate = max([SequenceMatcher(None, company_cln, rec).ratio() for rec in recruiter_list])
 
-                if company.lower().replace(' ', '') not in recruiter_list:
+                if max_rate < 0.5:
                     item = IndeedItem()
                     item['company'] = company
 
