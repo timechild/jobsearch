@@ -31,7 +31,7 @@ class IndeedSpider(scrapy.Spider):
                 f = lambda item: item['job_url'] == job_url
                 unique_url = len(filter(f, self.final_list))
 
-                if max_rate < 0.75 and unique_url == 0:
+                if max_rate < 0.58 and unique_url == 0:
                     item = IndeedItem()
                     item['company'] = company
 
