@@ -88,3 +88,11 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+from datetime import date
+import os
+
+FEED_FORMAT='csv'
+AWS_ACCESS_KEY_ID= os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY= os.environ.get('AWS_SECRET_ACCESS_KEY')
+FEED_URI='s3://jobsearch-python/jobs-{}.csv'.format(str(date.today()))

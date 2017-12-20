@@ -42,6 +42,7 @@ class IndeedSpider(scrapy.Spider):
                         item['job_url'] = self.indeed_root + res.css('.jobtitle a::attr(href)').extract_first()
                         item['title'] = res.css('.jobtitle a::attr(title)').extract_first()
 
+                    item['date'] = res.css('.date::text').extract()
                     item['day_rate'] = res.css('.no-wrap::text').extract_first().lstrip() # day rate
                     item['summary'] = res.css('.summary').extract_first()
 

@@ -20,3 +20,4 @@ class IndeedItem(scrapy.Item):
     title = scrapy.Field()
     day_rate = scrapy.Field()
     summary = scrapy.Field()
+    date = scrapy.Field()
